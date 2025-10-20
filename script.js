@@ -1,78 +1,91 @@
-// script.js (ES module)
-// IMPORTANT: replace FIREBASE CONFIG placeholder with your Firebase project's config
-// Create Firebase project -> Add Web app -> copy firebaseConfig here:
-const FIREBASE_CONFIG = /* 🔥 PASTE FIREBASE CONFIG HERE */ {
-  // Example:
-  // apiKey: "AIzaSy...yourkey...",
-  // authDomain: "your-project.firebaseapp.com",
-  // projectId: "your-project",
-  // storageBucket: "your-project.appspot.com",
-  // messagingSenderId: "...",
-  // appId: "1:...:web:..."
+// ===============================
+// 🔥 script.js (Full Firebase + Google Login + Upload + Caption System)
+// ===============================
+
+// তোমার Firebase Config (যেটা তুমি Firebase Console থেকে নিয়েছো)
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBrVRoZ-VUj4qWyzvYtRZfVP4TJqTEfU2M",
+  authDomain: "zxanikvai.firebaseapp.com",
+  projectId: "zxanikvai",
+  storageBucket: "zxanikvai.firebasestorage.app",
+  messagingSenderId: "664396990905",
+  appId: "1:664396990905:web:a685cefae6da070cec8e68",
+  measurementId: "G-XL1Y1FDC56"
 };
 
+// ===============================
+// Firebase Import
+// ===============================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
 
+// ===============================
+// Firebase Initialize
+// ===============================
 if (!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey) {
-  alert('Firebase config missing! মাস্টি: script.js ফাইলে FIREBASE_CONFIG যোগ করো (Firebase Console থেকে কপি) ।');
+  alert('Firebase config missing! 🔥 script.js ফাইলে FIREBASE_CONFIG ঠিক করে বসাও।');
 }
 
-// init
 const app = initializeApp(FIREBASE_CONFIG);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// DOM refs
+// ===============================
+// DOM Elements
+// ===============================
 const splash = document.getElementById('splash');
 const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
-
 const heroName = document.getElementById('heroName');
 const heroRole = document.getElementById('heroRole');
 const heroPhoto = document.getElementById('heroPhoto');
-
 const createSection = document.getElementById('createSection');
 const fileInput = document.getElementById('fileInput');
 const uploadBtn = document.getElementById('uploadBtn');
 const uploadStatus = document.getElementById('uploadStatus');
 const historyGrid = document.getElementById('historyGrid');
-
 const captionForm = document.getElementById('captionForm');
 const newCaptionBtn = document.getElementById('newCaptionBtn');
 const saveCaption = document.getElementById('saveCaption');
 const cancelCaption = document.getElementById('cancelCaption');
 const captionInput = document.getElementById('captionInput');
 const captionsList = document.getElementById('captionsList');
-
 const portfolioGrid = document.getElementById('portfolioGrid');
 
-// NAV
+// ===============================
+// Navigation Buttons
+// ===============================
 document.getElementById('navHome').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 document.getElementById('navAbout').addEventListener('click', ()=> document.getElementById('aboutSection').scrollIntoView({behavior:'smooth'}));
 document.getElementById('navBlog').addEventListener('click', ()=> document.getElementById('blogSection').scrollIntoView({behavior:'smooth'}));
 document.getElementById('navPortfolio').addEventListener('click', ()=> document.getElementById('portfolioSection').scrollIntoView({behavior:'smooth'}));
 document.getElementById('navContact').addEventListener('click', ()=> document.getElementById('contactSection').scrollIntoView({behavior:'smooth'}));
 
-// Splash hide after ready
+// ===============================
+// Splash Screen Hide
+// ===============================
 window.addEventListener('load', () => {
   setTimeout(()=> { splash.classList.add('hidden'); }, 900);
 });
 
-// AUTH actions
+// ===============================
+// Authentication
+// ===============================
 loginBtn.addEventListener('click', async () => {
-  try { await signInWithPopup(auth, provider); } catch(e){ alert('Login failed: '+e.message); }
+  try { await signInWithPopup(auth, provider); } 
+  catch(e){ alert('Login failed: '+e.message); }
 });
+
 logoutBtn.addEventListener('click', async () => { await signOut(auth); });
 
-// Auth state change
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    // show user UI
     loginBtn.classList.add('hidden');
     logoutBtn.classList.remove('hidden');
     createSection.classList.remove('hidden');
@@ -81,16 +94,13 @@ onAuthStateChanged(auth, async (user) => {
     heroRole.textContent = user.email || 'Member';
     heroPhoto.src = user.photoURL || heroPhoto.src;
 
-    // load history & captions & portfolio (user-specific)
     await loadUploads(user.uid);
     await loadCaptions(user.uid);
     await loadPortfolio();
   } else {
-    // guest UI
     loginBtn.classList.remove('hidden');
     logoutBtn.classList.add('hidden');
     createSection.classList.add('hidden');
-
     heroName.textContent = 'ANIK MIA';
     heroRole.textContent = 'Designer • Developer • Storyteller';
     heroPhoto.src = 'https://via.placeholder.com/180x180.png?text=ZX';
@@ -98,7 +108,9 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// UPLOAD image
+// ===============================
+// Upload Image
+// ===============================
 uploadBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
   if (!user) return alert('Please login first');
@@ -110,20 +122,19 @@ uploadBtn.addEventListener('click', async () => {
   const storageRef = ref(storage, path);
   await uploadBytes(storageRef, file);
   const url = await getDownloadURL(storageRef);
-
-  // save metadata
   await addDoc(collection(db, 'images'), { uid: user.uid, url, name: file.name, createdAt: Date.now() });
   uploadStatus.textContent = 'Uploaded ✅';
   fileInput.value = '';
   await loadUploads(user.uid);
 });
 
-// DEMO generate (creates a placeholder image blob)
+// ===============================
+// Demo Generate
+// ===============================
 document.getElementById('generateDemo').addEventListener('click', async () => {
   const user = auth.currentUser;
   if (!user) return alert('Please login first to generate demo image');
 
-  // create a simple canvas image
   const canvas = document.createElement('canvas');
   canvas.width = 800; canvas.height = 450;
   const ctx = canvas.getContext('2d');
@@ -146,7 +157,9 @@ document.getElementById('generateDemo').addEventListener('click', async () => {
   });
 });
 
-// Load uploads for user
+// ===============================
+// Load User Uploads
+// ===============================
 async function loadUploads(uid) {
   historyGrid.innerHTML = 'Loading...';
   const q = query(collection(db, 'images'), where('uid', '==', uid), orderBy('createdAt','desc'));
@@ -157,17 +170,18 @@ async function loadUploads(uid) {
     const data = doc.data();
     const el = document.createElement('div');
     el.className = 'port-item';
-    el.innerHTML = `<img src="${data.url}" alt="${data.name}"><div class="p-2 text-sm text-slate-300">${new Date(data.createdAt).toLocaleString()}</div>`;
+    el.innerHTML = `<img src="${data.url}" alt="${data.name}">
+      <div class="p-2 text-sm text-slate-300">${new Date(data.createdAt).toLocaleString()}</div>`;
     historyGrid.appendChild(el);
   });
 }
 
-// CAPTIONS (simple user-managed posts)
-// new caption toggle
+// ===============================
+// Captions
+// ===============================
 newCaptionBtn.addEventListener('click', ()=> captionForm.classList.toggle('hidden'));
 cancelCaption.addEventListener('click', ()=> { captionForm.classList.add('hidden'); captionInput.value = ''; });
 
-// save caption to Firestore
 saveCaption.addEventListener('click', async () => {
   const user = auth.currentUser;
   if (!user) return alert('Please login first to save caption');
@@ -180,10 +194,8 @@ saveCaption.addEventListener('click', async () => {
   await loadCaptions(user.uid);
 });
 
-// load captions (user's + public recent)
 async function loadCaptions(uid) {
   captionsList.innerHTML = 'Loading...';
-  // show recent global 10 captions
   const q = query(collection(db, 'captions'), orderBy('createdAt','desc'));
   const snap = await getDocs(q);
   captionsList.innerHTML = '';
@@ -202,7 +214,9 @@ async function loadCaptions(uid) {
   });
 }
 
-// portfolio demo items (static, can be replaced with Firestore-driven later)
+// ===============================
+// Portfolio Demo Items
+// ===============================
 async function loadPortfolio() {
   portfolioGrid.innerHTML = '';
   const demo = [
@@ -213,12 +227,21 @@ async function loadPortfolio() {
   demo.forEach(item => {
     const node = document.createElement('div');
     node.className = 'port-item';
-    node.innerHTML = `<img src="${item.img}" alt="${item.title}"><div class="p-3"><div class="font-semibold text-slate-100">${item.title}</div><div class="text-sm text-slate-300 mt-1">${item.note}</div></div>`;
+    node.innerHTML = `<img src="${item.img}" alt="${item.title}">
+      <div class="p-3">
+        <div class="font-semibold text-slate-100">${item.title}</div>
+        <div class="text-sm text-slate-300 mt-1">${item.note}</div>
+      </div>`;
     portfolioGrid.appendChild(node);
   });
 }
 
-/* Utility: very small sanitizer */
+// ===============================
+// HTML Text Sanitizer
+// ===============================
 function escapeHtml(text) {
-  return text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+  return text
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;');
 }
