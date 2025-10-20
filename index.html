@@ -140,3 +140,152 @@
   <script type="module" src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>জীবনবৃত্তান্ত</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- ফর্ম অংশ -->
+    <form id="cvForm">
+      <h1>তথ্য পূরণ করুন</h1>
+
+      <label>নাম:</label>
+      <input type="text" id="name" required>
+
+      <label>পিতার নাম:</label>
+      <input type="text" id="fname" required>
+
+      <label>মাতার নাম:</label>
+      <input type="text" id="mname" required>
+
+      <label>স্থায়ী ঠিকানা:</label>
+      <input type="text" id="paddress" required>
+
+      <label>বর্তমান ঠিকানা:</label>
+      <input type="text" id="caddress" required>
+
+      <label>মোবাইল নম্বর:</label>
+      <input type="text" id="mobile" required>
+
+      <label>জন্ম তারিখ:</label>
+      <input type="text" id="dob" placeholder="দিন/মাস/বছর" required>
+
+      <label>লিঙ্গ:</label>
+      <select id="sex">
+        <option value="পুরুষ">পুরুষ</option>
+        <option value="মহিলা">মহিলা</option>
+      </select>
+
+      <label>উচ্চতা:</label>
+      <input type="text" id="height" placeholder="যেমন: ৫ ফুট ৭ ইঞ্চি">
+
+      <label>ধর্ম:</label>
+      <select id="religion">
+        <option value="ইসলাম">ইসলাম</option>
+        <option value="হিন্দু">হিন্দু</option>
+        <option value="খ্রিষ্টান">খ্রিষ্টান</option>
+        <option value="বৌদ্ধ">বৌদ্ধ</option>
+      </select>
+
+      <label>জাতীয়তা:</label>
+      <input type="text" id="nationality" value="বাংলাদেশি">
+
+      <h3>শিক্ষাগত যোগ্যতা</h3>
+
+      <label>HSC:</label>
+      <select id="hscGroup">
+        <option value="">গ্রুপ</option>
+        <option value="বিজ্ঞান">বিজ্ঞান</option>
+        <option value="বাণিজ্য">বাণিজ্য</option>
+        <option value="মানবিক">মানবিক</option>
+      </select>
+      <select id="hscBoard">
+        <option value="">বোর্ড</option>
+        <option value="ঢাকা">ঢাকা</option>
+        <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+        <option value="রাজশাহী">রাজশাহী</option>
+        <option value="খুলনা">খুলনা</option>
+        <option value="বরিশাল">বরিশাল</option>
+        <option value="সিলেট">সিলেট</option>
+        <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+      </select>
+      <input type="text" id="hscGpa" placeholder="GPA">
+      <input type="text" id="hscYear" placeholder="সাল">
+
+      <label>SSC:</label>
+      <select id="sscGroup">
+        <option value="">গ্রুপ</option>
+        <option value="বিজ্ঞান">বিজ্ঞান</option>
+        <option value="বাণিজ্য">বাণিজ্য</option>
+        <option value="মানবিক">মানবিক</option>
+      </select>
+      <select id="sscBoard">
+        <option value="">বোর্ড</option>
+        <option value="ঢাকা">ঢাকা</option>
+        <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+        <option value="রাজশাহী">রাজশাহী</option>
+        <option value="খুলনা">খুলনা</option>
+        <option value="বরিশাল">বরিশাল</option>
+        <option value="সিলেট">সিলেট</option>
+        <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+      </select>
+      <input type="text" id="sscGpa" placeholder="GPA">
+      <input type="text" id="sscYear" placeholder="সাল">
+
+      <button type="button" onclick="generateCV()">সিভি তৈরি করুন</button>
+    </form>
+
+    <!-- তৈরি সিভি অংশ -->
+    <div id="cvOutput" class="cv-section" style="display:none;">
+      <h2>জীবনবৃত্তান্ত</h2>
+
+      <p><strong>নাম:</strong> <span id="outName"></span></p>
+      <p><strong>পিতার নাম:</strong> <span id="outFname"></span></p>
+      <p><strong>মাতার নাম:</strong> <span id="outMname"></span></p>
+      <p><strong>স্থায়ী ঠিকানা:</strong> <span id="outPaddress"></span></p>
+      <p><strong>বর্তমান ঠিকানা:</strong> <span id="outCaddress"></span></p>
+      <p><strong>মোবাইল নম্বর:</strong> <span id="outMobile"></span></p>
+      <p><strong>জন্ম তারিখ:</strong> <span id="outDob"></span></p>
+      <p><strong>লিঙ্গ:</strong> <span id="outSex"></span></p>
+      <p><strong>উচ্চতা:</strong> <span id="outHeight"></span></p>
+      <p><strong>ধর্ম:</strong> <span id="outReligion"></span></p>
+      <p><strong>জাতীয়তা:</strong> <span id="outNationality"></span></p>
+
+      <h3>শিক্ষাগত যোগ্যতা</h3>
+      <table>
+        <tr>
+          <th>পরীক্ষার নাম</th>
+          <th>গ্রুপ</th>
+          <th>বোর্ড</th>
+          <th>GPA</th>
+          <th>সাল</th>
+        </tr>
+        <tr>
+          <td>HSC</td>
+          <td id="outHscGroup"></td>
+          <td id="outHscBoard"></td>
+          <td id="outHscGpa"></td>
+          <td id="outHscYear"></td>
+        </tr>
+        <tr>
+          <td>SSC</td>
+          <td id="outSscGroup"></td>
+          <td id="outSscBoard"></td>
+          <td id="outSscGpa"></td>
+          <td id="outSscYear"></td>
+        </tr>
+      </table>
+
+      <button onclick="printCV()">প্রিন্ট বা সেভ করুন</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
