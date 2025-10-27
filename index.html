@@ -3,42 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>লগইন করুন</title>
+  <title>লগইন ও জীবনবৃত্তান্ত</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Noto Sans Bengali', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .login-box, .container {
+      width: 80%;
+      max-width: 700px;
+      background: white;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .login-box {
+      text-align: center;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    .cv-section {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- লগইন অংশ -->
-  <div id="loginBox" class="login-container">
-    <h2>ওয়েবসাইটে প্রবেশ করতে লগইন করুন 🔐</h2>
+  <!-- 🔐 লগইন ফর্ম -->
+  <div class="login-box" id="loginBox">
+    <h2>ওয়েবসাইটে প্রবেশ করতে লগইন করুন 🔒</h2>
     <input type="text" id="username" placeholder="ইউজারনেম দিন">
-    <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
-    <button onclick="checkLogin()">লগইন করুন</button>
-    <p id="error" style="color:red;"></p>
+    <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
+    <button onclick="login()">লগইন করুন</button>
   </div>
 
-  <!-- আসল ওয়েবসাইটের কন্টেন্ট -->
-  <div id="mainContent" style="display:none;">
-    <!-- এখানে তোমার আগের সিভি ফর্ম কোড বসাও -->
-    <h1>তথ্য পূরণ করুন</h1>
-    <!-- ...তোমার ফর্ম ও সিভি কোড এখানে থাকবে... -->
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>জীবনবৃত্তান্ত</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-
-    <!-- ফর্ম অংশ -->
+  <!-- 📋 CV ফর্ম -->
+  <div class="container" id="cvContainer" style="display:none;">
     <form id="cvForm">
       <h1>তথ্য পূরণ করুন</h1>
 
@@ -126,10 +164,10 @@
       <input type="text" id="sscYear" placeholder="সাল">
 
       <button type="button" onclick="generateCV()">সিভি তৈরি করুন</button>
+      <button type="button" onclick="logout()">লগআউট করুন</button>
     </form>
 
-    <!-- তৈরি সিভি অংশ -->
-    <div id="cvOutput" class="cv-section" style="display:none;">
+    <div id="cvOutput" class="cv-section">
       <h2>জীবনবৃত্তান্ত</h2>
 
       <p><strong>নাম:</strong> <span id="outName"></span></p>
@@ -173,7 +211,55 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      // ✅ এখানে তুমি নিজের ইউজারনেম ও পাসওয়ার্ড সেট করতে পারো
+      if (user === "admin" && pass === "1234") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("cvContainer").style.display = "block";
+      } else {
+        alert("⚠ ইউজারনেম বা পাসওয়ার্ড ভুল!");
+      }
+    }
+
+    function logout() {
+      document.getElementById("cvContainer").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+    }
+
+    function generateCV() {
+      document.getElementById("cvOutput").style.display = "block";
+
+      document.getElementById("outName").innerText = document.getElementById("name").value;
+      document.getElementById("outFname").innerText = document.getElementById("fname").value;
+      document.getElementById("outMname").innerText = document.getElementById("mname").value;
+      document.getElementById("outPaddress").innerText = document.getElementById("paddress").value;
+      document.getElementById("outCaddress").innerText = document.getElementById("caddress").value;
+      document.getElementById("outMobile").innerText = document.getElementById("mobile").value;
+      document.getElementById("outDob").innerText = document.getElementById("dob").value;
+      document.getElementById("outSex").innerText = document.getElementById("sex").value;
+      document.getElementById("outHeight").innerText = document.getElementById("height").value;
+      document.getElementById("outReligion").innerText = document.getElementById("religion").value;
+      document.getElementById("outNationality").innerText = document.getElementById("nationality").value;
+
+      document.getElementById("outHscGroup").innerText = document.getElementById("hscGroup").value;
+      document.getElementById("outHscBoard").innerText = document.getElementById("hscBoard").value;
+      document.getElementById("outHscGpa").innerText = document.getElementById("hscGpa").value;
+      document.getElementById("outHscYear").innerText = document.getElementById("hscYear").value;
+
+      document.getElementById("outSscGroup").innerText = document.getElementById("sscGroup").value;
+      document.getElementById("outSscBoard").innerText = document.getElementById("sscBoard").value;
+      document.getElementById("outSscGpa").innerText = document.getElementById("sscGpa").value;
+      document.getElementById("outSscYear").innerText = document.getElementById("sscYear").value;
+    }
+
+    function printCV() {
+      window.print();
+    }
+  </script>
+
 </body>
 </html>
-
