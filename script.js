@@ -1,4 +1,31 @@
-function generateCV() {
+function checkLogin() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  const error = document.getElementById("error");
+
+  // এখানে তুমি তোমার নিজের ইউজারনেম আর পাসওয়ার্ড দেবে
+  const correctUser = "anik";
+  const correctPass = "12345";
+
+  if (user === correctUser && pass === correctPass) {
+    // লগইন সফল হলে
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+
+    // চাইলে লগইন রিমেম্বারও করা যাবে (ব্রাউজারে)
+    localStorage.setItem("loggedIn", "true");
+  } else {
+    error.innerText = "ইউজারনেম বা পাসওয়ার্ড ভুল!";
+  }
+}
+
+// পেজ রিফ্রেশের পরেও লগইন অবস্থায় রাখবে
+window.onload = function() {
+  if (localStorage.getItem("loggedIn") === "true") {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  }
+};function generateCV() {
   document.getElementById("outName").innerText = document.getElementById("name").value;
   document.getElementById("outFname").innerText = document.getElementById("fname").value;
   document.getElementById("outMname").innerText = document.getElementById("mname").value;
@@ -28,3 +55,4 @@ function generateCV() {
 function printCV() {
   window.print();
 }
+
