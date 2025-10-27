@@ -1,31 +1,27 @@
-function checkLogin() {
+function login() {
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
-  const error = document.getElementById("error");
 
-  // এখানে তুমি তোমার নিজের ইউজারনেম আর পাসওয়ার্ড দেবে
-  const correctUser = "anik";
-  const correctPass = "12345";
-
-  if (user === correctUser && pass === correctPass) {
-    // লগইন সফল হলে
+  if (user === "anik" && pass === "1234") { 
     document.getElementById("loginBox").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-
-    // চাইলে লগইন রিমেম্বারও করা যাবে (ব্রাউজারে)
-    localStorage.setItem("loggedIn", "true");
+    document.getElementById("cvContainer").style.display = "block";
   } else {
-    error.innerText = "ইউজারনেম বা পাসওয়ার্ড ভুল!";
+    alert("⚠ ইউজারনেম বা পাসওয়ার্ড ভুল!");
   }
 }
 
-// পেজ রিফ্রেশের পরেও লগইন অবস্থায় রাখবে
-window.onload = function() {
-  if (localStorage.getItem("loggedIn") === "true") {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-  }
-};function generateCV() {
+function logout() {
+  document.getElementById("cvContainer").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("cvForm").style.display = "block";
+  document.getElementById("cvOutput").style.display = "none";
+}
+
+function generateCV() {
+  document.getElementById("cvForm").style.display = "none";
+  document.getElementById("cvOutput").style.display = "block";
+
+  // Basic Info
   document.getElementById("outName").innerText = document.getElementById("name").value;
   document.getElementById("outFname").innerText = document.getElementById("fname").value;
   document.getElementById("outMname").innerText = document.getElementById("mname").value;
@@ -37,22 +33,58 @@ window.onload = function() {
   document.getElementById("outHeight").innerText = document.getElementById("height").value;
   document.getElementById("outReligion").innerText = document.getElementById("religion").value;
   document.getElementById("outNationality").innerText = document.getElementById("nationality").value;
+  document.getElementById("outMarital").innerText = document.getElementById("maritalStatus").value;
 
-  document.getElementById("outHscGroup").innerText = document.getElementById("hscGroup").value;
-  document.getElementById("outHscBoard").innerText = document.getElementById("hscBoard").value;
-  document.getElementById("outHscGpa").innerText = document.getElementById("hscGpa").value;
-  document.getElementById("outHscYear").innerText = document.getElementById("hscYear").value;
+  // Profile Pic
+  const file = document.getElementById("profilePic").files[0];
+  if(file){
+    document.getElementById("outProfilePic").src = URL.createObjectURL(file);
+  }
 
-  document.getElementById("outSscGroup").innerText = document.getElementById("sscGroup").value;
-  document.getElementById("outSscBoard").innerText = document.getElementById("sscBoard").value;
-  document.getElementById("outSscGpa").innerText = document.getElementById("sscGpa").value;
-  document.getElementById("outSscYear").innerText = document.getElementById("sscYear").value;
+  // Education
+  const eduSection = document.getElementById("educationSection");
+  const eduDiv = document.getElementById("eduSection");
+  eduSection.innerHTML = "";
 
-  document.getElementById("cvForm").style.display = "none";
-  document.getElementById("cvOutput").style.display = "block";
+  if(document.getElementById("hasEducation").checked){
+    eduDiv.style.display = "block";
+    eduSection.innerHTML += `
+      <tr>
+        <td>HSC</td>
+        <td>${document.getElementById("hscGroup").value}</td>
+        <td>${document.getElementById("hscBoard").value}</td>
+        <td>${document.getElementById("hscGpa").value}</td>
+        <td>${document.getElementById("hscYear").value}</td>
+      </tr>
+      <tr>
+        <td>SSC</td>
+        <td>${document.getElementById("sscGroup").value}</td>
+        <td>${document.getElementById("sscBoard").value}</td>
+        <td>${document.getElementById("sscGpa").value}</td>
+        <td>${document.getElementById("sscYear").value}</td>
+      </tr>`;
+  } else {
+    eduDiv.style.display = "none";
+  }
+
+  // Work Experience
+  const workSection = document.getElementById("workSection");
+  const workDiv = document.getElementById("workExperience");
+  workSection.innerHTML = "";
+
+  if(document.getElementById("hasWork").checked){
+    workDiv.style.display = "block";
+    workSection.innerHTML += `
+      <tr>
+        <td>${document.getElementById("jobTitle").value}</td>
+        <td>${document.getElementById("companyName").value}</td>
+        <td>${document.getElementById("jobDescription").value}</td>
+      </tr>`;
+  } else {
+    workDiv.style.display = "none";
+  }
 }
 
 function printCV() {
   window.print();
 }
-
