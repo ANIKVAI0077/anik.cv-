@@ -1,17 +1,17 @@
 body {
-    background: #eef3f8;
-    font-family: 'Segoe UI', sans-serif;
+  background: #eef3f8;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .container, .panel {
-    width: 90%;
-    max-width: 550px;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    margin-top: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #b6c4d4;
+  width: 90%;
+  max-width: 550px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #b6c4d4;
 }
 
 .hidden { display: none; }
@@ -19,24 +19,24 @@ body {
 h2 { text-align: center; color: #0066cc; }
 
 input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    font-size: 16px;
-    border: 1px solid #aaa;
-    border-radius: 6px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    background: #007bff;
-    border: none;
-    color: white;
-    margin-top: 10px;
-    font-size: 17px;
-    border-radius: 6px;
-    cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  border: none;
+  color: white;
+  margin-top: 10px;
+  font-size: 17px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 button:hover { background: #005fcc; }
@@ -48,53 +48,34 @@ button:hover { background: #005fcc; }
 .cancelBtn { background: #6c757d; }
 
 .customer-box {
-    background: #eaf3ff;
-    padding: 12px;
-    margin: 10px 0;
-    border-left: 4px solid #007bff;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+  background: #eaf3ff;
+  padding: 12px;
+  margin: 10px 0;
+  border-left: 4px solid #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .customer-box img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 4px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
 }
 
 .baki-item {
-    background: #f4f8ff;
-    padding: 12px;
-    margin: 10px 0;
-    border-left: 4px solid #007bff;
-    border-radius: 6px;
+  background: #f4f8ff;
+  padding: 12px;
+  margin: 10px 0;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
 }
 
-.edit-baki-btn {
-    background: #ff9900 !important;
-    margin-top: 5px;
-}
+.edit-baki-btn { background: #ff9900 !important; margin-top: 5px; }
+.delete-baki-btn { background: #dc3545 !important; margin-top: 5px; }
 
-.delete-baki-btn {
-    background: #dc3545 !important;
-    margin-top: 5px;
-}
-
-#custInfo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-#custImg {
-    width: 80px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+#custInfo { display: flex; align-items: center; margin-bottom: 15px; }
+#custImg { width: 80px; height: 100px; object-fit: cover; margin-right: 15px; border: 1px solid #ccc; border-radius: 4px; }
