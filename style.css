@@ -1,82 +1,100 @@
 body {
-  font-family: 'Noto Sans Bengali', sans-serif;
-  background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
+    background: #eef3f8;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.login-box, .container {
-  width: 80%;
-  max-width: 700px;
-  background: white;
-  margin: 50px auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+.container, .panel {
+    width: 90%;
+    max-width: 550px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #b6c4d4;
 }
 
-.login-box {
-  text-align: center;
-}
+.hidden { display: none; }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+h2 { text-align: center; color: #0066cc; }
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
 }
 
 button {
-  width: 100%;
-  padding: 10px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    border: none;
+    color: white;
+    margin-top: 10px;
+    font-size: 17px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-button:hover {
-  background: #0056b3;
+button:hover { background: #005fcc; }
+
+.deleteBtn { background: #d9534f; }
+.deleteBtn:hover { background: #b52b27; }
+
+.editBtn { background: #17a2b8; }
+.cancelBtn { background: #6c757d; }
+
+.customer-box {
+    background: #eaf3ff;
+    padding: 12px;
+    margin: 10px 0;
+    border-left: 4px solid #007bff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-h1, h2, h3 {
-  text-align: center;
+.customer-box img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 4px;
 }
 
-.cv-section {
-  display: none;
-  line-height: 2;
-  font-size: 18px;
-  position: relative;
+.baki-item {
+    background: #f4f8ff;
+    padding: 12px;
+    margin: 10px 0;
+    border-left: 4px solid #007bff;
+    border-radius: 6px;
 }
 
-#cvOutput img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 4cm;
-  height: 5cm;
-  object-fit: cover;
+.edit-baki-btn {
+    background: #ff9900 !important;
+    margin-top: 5px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+.delete-baki-btn {
+    background: #dc3545 !important;
+    margin-top: 5px;
 }
 
-th, td {
-  border: 1px solid #000;
-  padding: 8px;
-  text-align: center;
+#custInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-/* প্রিন্টের সময় */
-@media print {
-  #printButton { display: none !important; }
+#custImg {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
