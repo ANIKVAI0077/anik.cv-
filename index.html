@@ -1,180 +1,70 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>লগইন ও জীবনবৃত্তান্ত</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahim Store - বাকি ম্যানেজার</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 🔐 লগইন ফর্ম -->
-  <div class="login-box" id="loginBox">
-    <h2>ওয়েবসাইটে প্রবেশ করতে লগইন করুন 🔒</h2>
-    <input type="text" id="username" placeholder="ইউজারনেম দিন">
-    <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
-    <button onclick="login()">লগইন করুন</button>
-  </div>
 
-  <!-- 📋 CV ফর্ম -->
-  <div class="container" id="cvContainer" style="display:none;">
-    <form id="cvForm">
-      <h1>তথ্য পূরণ করুন</h1>
+<div id="home" class="container">
+    <h2>📘 Fahim Store - বাকি হিসাব</h2>
 
-      <label>নাম:</label>
-      <input type="text" id="name" required>
-      <label>পিতার নাম:</label>
-      <input type="text" id="fname" required>
-      <label>মাতার নাম:</label>
-      <input type="text" id="mname" required>
-      <label>স্থায়ী ঠিকানা:</label>
-      <input type="text" id="paddress" required>
-      <label>বর্তমান ঠিকানা:</label>
-      <input type="text" id="caddress" required>
-      <label>মোবাইল নম্বর:</label>
-      <input type="text" id="mobile" required>
-      <label>জন্ম তারিখ:</label>
-      <input type="text" id="dob" placeholder="দিন/মাস/বছর" required>
-      <label>লিঙ্গ:</label>
-      <select id="sex">
-        <option value="পুরুষ">পুরুষ</option>
-        <option value="মহিলা">মহিলা</option>
-      </select>
-      <label>উচ্চতা:</label>
-      <input type="text" id="height" placeholder="যেমন: ৫ ফুট ৭ ইঞ্চি">
-      <label>ধর্ম:</label>
-      <select id="religion">
-        <option value="ইসলাম">ইসলাম</option>
-        <option value="হিন্দু">হিন্দু</option>
-        <option value="খ্রিষ্টান">খ্রিষ্টান</option>
-        <option value="বৌদ্ধ">বৌদ্ধ</option>
-      </select>
-      <label>জাতীয়তা:</label>
-      <input type="text" id="nationality" value="বাংলাদেশি">
+    <div class="section">
+        <h3>নতুন কাস্টমার যোগ করুন</h3>
 
-      <label>বৈবাহিক অবস্থা:</label>
-      <select id="maritalStatus">
-        <option value="অবিবাহিত">অবিবাহিত</option>
-        <option value="বিবাহিত">বিবাহিত</option>
-      </select>
+        <input id="custName" type="text" placeholder="কাস্টমারের নাম">
+        <input id="custPhone" type="text" placeholder="কাস্টমারের নম্বর">
+        <label>ছবি আপলোড (Passport Size)</label>
+        <input id="custPhoto" type="file" accept="image/*">
 
-      <!-- শিক্ষাগত যোগ্যতা -->
-      <h3>শিক্ষাগত যোগ্যতা</h3>
-      <label><input type="checkbox" id="hasEducation"> শিক্ষাগত যোগ্যতা আছে</label>
-      <div id="educationBox">
-        <label>HSC:</label>
-        <select id="hscGroup">
-          <option value="">গ্রুপ</option>
-          <option value="বিজ্ঞান">বিজ্ঞান</option>
-          <option value="বাণিজ্য">বাণিজ্য</option>
-          <option value="মানবিক">মানবিক</option>
-        </select>
-        <select id="hscBoard">
-          <option value="">বোর্ড</option>
-          <option value="ঢাকা">ঢাকা</option>
-          <option value="চট্টগ্রাম">চট্টগ্রাম</option>
-          <option value="রাজশাহী">রাজশাহী</option>
-          <option value="খুলনা">খুলনা</option>
-          <option value="বরিশাল">বরিশাল</option>
-          <option value="সিলেট">সিলেট</option>
-          <option value="ময়মনসিংহ">ময়মনসিংহ</option>
-        </select>
-        <input type="text" id="hscGpa" placeholder="জিপিএ">
-        <input type="text" id="hscYear" placeholder="সাল">
-
-        <label>SSC:</label>
-        <select id="sscGroup">
-          <option value="">গ্রুপ</option>
-          <option value="বিজ্ঞান">বিজ্ঞান</option>
-          <option value="বাণিজ্য">বাণিজ্য</option>
-          <option value="মানবিক">মানবিক</option>
-        </select>
-        <select id="sscBoard">
-          <option value="">বোর্ড</option>
-          <option value="ঢাকা">ঢাকা</option>
-          <option value="চট্টগ্রাম">চট্টগ্রাম</option>
-          <option value="রাজশাহী">রাজশাহী</option>
-          <option value="খুলনা">খুলনা</option>
-          <option value="বরিশাল">বরিশাল</option>
-          <option value="সিলেট">সিলেট</option>
-          <option value="ময়মনসিংহ">ময়মনসিংহ</option>
-        </select>
-        <input type="text" id="sscGpa" placeholder="জিপিএ">
-        <input type="text" id="sscYear" placeholder="সাল">
-      </div>
-
-      <!-- কাজের অভিজ্ঞতা -->
-      <h3>কাজের অভিজ্ঞতা</h3>
-      <label><input type="checkbox" id="hasWork"> কাজের অভিজ্ঞতা আছে</label>
-      <div id="workBox">
-        <label>পদবী/পজিশন:</label>
-        <input type="text" id="jobTitle" placeholder="যেমন: শিক্ষক">
-        <label>প্রতিষ্ঠান:</label>
-        <input type="text" id="companyName" placeholder="যেমন: ABC স্কুল">
-        <label>কাজের বর্ণনা/বিষয়:</label>
-        <input type="text" id="jobDescription" placeholder="কাজের বিবরণ লিখুন">
-      </div>
-
-      <!-- প্রোফাইল ছবি -->
-      <label>প্রোফাইল ছবি:</label>
-      <input type="file" id="profilePic" accept="image/*">
-
-      <button type="button" onclick="generateCV()">সিভি তৈরি করুন</button>
-      <button type="button" onclick="logout()">লগআউট করুন</button>
-    </form>
-
-    <!-- CV Output -->
-    <div id="cvOutput" class="cv-section">
-      <img id="outProfilePic" alt="Profile Picture">
-      <h2>জীবনবৃত্তান্ত</h2>
-      <p><strong>নাম:</strong> <span id="outName"></span></p>
-      <p><strong>পিতার নাম:</strong> <span id="outFname"></span></p>
-      <p><strong>মাতার নাম:</strong> <span id="outMname"></span></p>
-      <p><strong>স্থায়ী ঠিকানা:</strong> <span id="outPaddress"></span></p>
-      <p><strong>বর্তমান ঠিকানা:</strong> <span id="outCaddress"></span></p>
-      <p><strong>মোবাইল নম্বর:</strong> <span id="outMobile"></span></p>
-      <p><strong>জন্ম তারিখ:</strong> <span id="outDob"></span></p>
-      <p><strong>লিঙ্গ:</strong> <span id="outSex"></span></p>
-      <p><strong>উচ্চতা:</strong> <span id="outHeight"></span></p>
-      <p><strong>ধর্ম:</strong> <span id="outReligion"></span></p>
-      <p><strong>জাতীয়তা:</strong> <span id="outNationality"></span></p>
-      <p><strong>বৈবাহিক অবস্থা:</strong> <span id="outMarital"></span></p>
-
-      <!-- শিক্ষাগত যোগ্যতা -->
-      <div id="eduSection">
-        <h3>শিক্ষাগত যোগ্যতা</h3>
-        <table id="educationTable">
-          <thead>
-            <tr>
-              <th>পরীক্ষার নাম</th>
-              <th>গ্রুপ</th>
-              <th>বোর্ড</th>
-              <th>জিপিএ</th>
-              <th>সাল</th>
-            </tr>
-          </thead>
-          <tbody id="educationSection"></tbody>
-        </table>
-      </div>
-
-      <!-- কাজের অভিজ্ঞতা -->
-      <div id="workExperience">
-        <h3>কাজের অভিজ্ঞতা</h3>
-        <table id="workTable">
-          <thead>
-            <tr>
-              <th>পদবী</th>
-              <th>প্রতিষ্ঠান</th>
-              <th>কাজের বর্ণনা</th>
-            </tr>
-          </thead>
-          <tbody id="workSection"></tbody>
-        </table>
-      </div>
-
-      <button id="printButton" onclick="printCV()">প্রিন্ট বা সেভ করুন</button>
+        <button onclick="addCustomer()">➕ কাস্টমার যোগ করুন</button>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <h3 class="mt">কাস্টমারের তালিকা</h3>
+    <ul id="customerList"></ul>
+</div>
+
+<!-- Customer Details Panel -->
+<div id="customerPanel" class="panel hidden">
+    <button class="backBtn" onclick="goHome()">⬅ ফিরে যান</button>
+
+    <div id="custInfo">
+        <img id="custImg" src="" alt="ছবি">
+        <div id="custDetails">
+            <h2 id="showName"></h2>
+            <p id="showPhone"></p>
+        </div>
+    </div>
+
+    <button class="editBtn" onclick="openEditCustomer()">✏ কাস্টমারের তথ্য এডিট করুন</button>
+
+    <!-- Edit Customer -->
+    <div id="editCustomerBox" class="hidden">
+        <input id="editName" type="text">
+        <input id="editPhone" type="text">
+        <label>ছবি পরিবর্তন করুন</label>
+        <input id="editPhoto" type="file" accept="image/*">
+        <button onclick="saveEditedCustomer()">💾 সেভ করুন</button>
+        <button class="cancelBtn" onclick="closeEditCustomer()">বন্ধ করুন</button>
+    </div>
+
+    <div class="section">
+        <h3>নতুন বাকি যোগ করুন</h3>
+
+        <input id="item" type="text" placeholder="পণ্যের নাম">
+        <input id="qty" type="text" placeholder="পরিমাণ">
+        <input id="price" type="number" placeholder="টাকার পরিমাণ">
+        <button onclick="addBaki()">➕ বাকি যুক্ত করুন</button>
+    </div>
+
+    <h3 class="mt">বাকির হিসাব</h3>
+    <div id="bakiList"></div>
+
+    <button class="deleteBtn" onclick="deleteCustomer()">❌ কাস্টমার ফাইল ডিলিট করুন</button>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
