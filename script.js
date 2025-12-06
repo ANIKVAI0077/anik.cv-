@@ -1,151 +1,264 @@
-let customers = JSON.parse(localStorage.getItem("fahimStore")) || [];
-let current = null;
-
-function save() { localStorage.setItem("fahimStore", JSON.stringify(customers)); }
-
-function getBase64(file, callback) {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => callback(reader.result);
-  reader.onerror = error => console.log(error);
+// =========================
+// Helper Functions
+// =========================
+const screens = document.querySelectorAll('.screen');
+function showScreen(id) {
+  screens.forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
-function addCustomer() {
-  let name = document.getElementById("custName").value;
-  let phone = document.getElementById("custPhone").value;
-  let photoFile = document.getElementById("custPhoto").files[0];
+// =========================
+// Home Buttons Navigation
+// =========================
+document.querySelectorAll('.cards .card').forEach(btn => {
+  btn.addEventListener('click', () => showScreen(btn.dataset.target));
+});
 
-  if (!name || !phone) { alert("নাম ও নম্বর লিখুন"); return; }
+// =========================
+// Local Storage Keys
+// =========================
+const DONATIONS_KEY = "donations";
+const EXPENSES_KEY = "expenses";
+const MEMBERS_KEY = "members";
+const NOTICES_KEY = "notices";
 
-  if (photoFile) {
-    getBase64(photoFile, (base64Img) => {
-      customers.push({ name, phone, photo: base64Img, baki: [] });
-      save();
-      clearAddCustomerForm();
-      loadCustomers();
-    });
-  } else {
-    customers.push({ name, phone, photo: "", baki: [] });
-    save();
-    clearAddCustomerForm();
-    loadCustomers();
-  }
+// =========================
+// Donations Form
+// =========================
+const donationForm = document.getElementById('donationForm');
+donationForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const donation = {
+    id: Date.now(),
+    name: document.getElementById('donorName').value,
+    phone: document.getElementById('donorPhone').value,
+    amount: parseFloat(document.getElementById('donationAmount').value),
+    date: document.getElementById('donationDate').value,
+    method: document.getElementById('paymentMethod').value,
+    note: document.getElementById('donationNote').value
+  };
+  const data = JSON.parse(localStorage.getItem(DONATIONS_KEY) || "[]");
+  data.push(donation);
+  localStorage.setItem(DONATIONS_KEY, JSON.stringify(data));
+
+  document.getElementById('recentSaved').textContent = `সেভ হয়েছে: ${donation.name} - ${donation.amount} টাকা`;
+  updateReceipt(donation);
+  donationForm.reset();
+  showScreen('receiptGenerator');
+  updateAccounts();
+  updateDonationTable();
+  updateReports();
+});
+
+// =========================
+// Update Receipt Preview
+// =========================
+function updateReceipt(donation){
+  document.getElementById('rName').textContent = donation.name;
+  document.getElementById('rAmount').textContent = donation.amount;
+  document.getElementById('rDate').textContent = donation.date;
+  document.getElementById('rNote').textContent = donation.note || "-";
 }
 
-function clearAddCustomerForm() {
-  document.getElementById("custName").value = "";
-  document.getElementById("custPhone").value = "";
-  document.getElementById("custPhoto").value = "";
-}
+// =========================
+// PDF Download
+// =========================
+document.getElementById('downloadPdf').addEventListener('click', () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const el = document.querySelector('.receipt');
+  doc.html(el, { x: 10, y: 10, callback: function(doc) { doc.save('receipt.pdf'); } });
+});
 
-function loadCustomers() {
-  let list = document.getElementById("customerList");
-  list.innerHTML = "";
-  customers.forEach((c, i) => {
-    let div = document.createElement("div");
-    div.className = "customer-box";
-    let img = document.createElement("img");
-    img.src = c.photo || "https://via.placeholder.com/50x50?text=No+Image";
-    div.appendChild(img);
-    let textDiv = document.createElement("div");
-    textDiv.innerHTML = `<strong>${c.name}</strong><br>${c.phone}`;
-    div.appendChild(textDiv);
-    div.onclick = () => openCustomer(i);
-    list.appendChild(div);
+// Print
+document.getElementById('printReceipt').addEventListener('click', () => {
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write('<html><head><title>রিসিট</title></head><body>');
+  printWindow.document.write(document.querySelector('.receipt').outerHTML);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.print();
+});
+
+// =========================
+// Donation List Table
+// =========================
+function updateDonationTable(filterName="", filterMonth=""){
+  const data = JSON.parse(localStorage.getItem(DONATIONS_KEY) || "[]");
+  let filtered = data;
+  if(filterName) filtered = filtered.filter(d => d.name.includes(filterName));
+  if(filterMonth) filtered = filtered.filter(d => d.date.startsWith(filterMonth));
+  const tableDiv = document.getElementById('donationTable');
+  if(filtered.length===0) { tableDiv.innerHTML="কোনো রেকর্ড নেই"; return; }
+  let html = '<table><tr><th>নাম</th><th>মোবাইল</th><th>পরিমাণ</th><th>তারিখ</th><th>পেমেন্ট</th><th>নোট</th></tr>';
+  filtered.forEach(d => {
+    html += `<tr>
+      <td>${d.name}</td>
+      <td>${d.phone || "-"}</td>
+      <td>${d.amount}</td>
+      <td>${d.date}</td>
+      <td>${d.method}</td>
+      <td>${d.note || "-"}</td>
+    </tr>`;
   });
+  html += '</table>';
+  tableDiv.innerHTML = html;
 }
-loadCustomers();
+document.getElementById('applyFilter').addEventListener('click', () => {
+  const name = document.getElementById('filterName').value;
+  const month = document.getElementById('filterMonth').value;
+  updateDonationTable(name, month);
+});
 
-function openCustomer(i) {
-  current = i;
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("customerPanel").classList.remove("hidden");
-  let c = customers[i];
-  document.getElementById("showName").innerText = c.name;
-  document.getElementById("showPhone").innerText = "📞 " + c.phone;
-  document.getElementById("custImg").src = c.photo || "https://via.placeholder.com/80x100?text=No+Image";
-  loadBaki();
-}
+// =========================
+// Accounts
+// =========================
+let expenses = JSON.parse(localStorage.getItem(EXPENSES_KEY) || "[]");
 
-function goHome() {
-  document.getElementById("customerPanel").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-}
+function updateAccounts() {
+  const donations = JSON.parse(localStorage.getItem(DONATIONS_KEY) || "[]");
+  const totalIncome = donations.reduce((sum,d)=>sum+d.amount,0);
+  const totalExpense = expenses.reduce((sum,e)=>sum+parseFloat(e.amount),0);
+  document.getElementById('totalIncome').textContent = totalIncome;
+  document.getElementById('totalExpense').textContent = totalExpense;
+  document.getElementById('balance').textContent = totalIncome - totalExpense;
 
-function addBaki() {
-  let item = document.getElementById("item").value;
-  let qty = document.getElementById("qty").value;
-  let price = document.getElementById("price").value;
-  if (!item || !qty || !price) { alert("সব তথ্য পূরণ করুন"); return; }
-
-  let entry = { id: Date.now(), date: new Date().toLocaleString(), item, qty, price };
-  customers[current].baki.push(entry);
-  save();
-  document.getElementById("item").value = "";
-  document.getElementById("qty").value = "";
-  document.getElementById("price").value = "";
-  loadBaki();
-}
-
-function loadBaki() {
-  let list = document.getElementById("bakiList");
-  list.innerHTML = "";
-  customers[current].baki.forEach((b) => {
-    let div = document.createElement("div");
-    div.className = "baki-item";
-    div.innerHTML = `
-      <b>📅 ${b.date}</b><br>
-      🛒 ${b.item} — ${b.qty}<br>
-      💰 ${b.price} টাকা<br>
-      <button class="edit-baki-btn" onclick="editBaki(${b.id})">এডিট</button>
-      <button class="delete-baki-btn" onclick="deleteBaki(${b.id})">ডিলিট</button>
-    `;
-    list.appendChild(div);
+  const logDiv = document.getElementById('accountsLog');
+  let html = '<table><tr><th>বিবরণ</th><th>পরিমাণ</th><th>তারিখ</th></tr>';
+  expenses.forEach(e => {
+    html += `<tr><td>${e.desc}</td><td>${e.amount}</td><td>${e.date}</td></tr>`;
   });
+  html += '</table>';
+  logDiv.innerHTML = html;
 }
 
-function editBaki(id) {
-  let c = customers[current];
-  let entry = c.baki.find(b => b.id == id);
-  let item = prompt("পণ্যের নাম:", entry.item);
-  let qty = prompt("পরিমাণ:", entry.qty);
-  let price = prompt("টাকা:", entry.price);
-  if (!item || !qty || !price) return;
-  entry.item = item; entry.qty = qty; entry.price = price;
-  save(); loadBaki();
+document.getElementById('addExpense').addEventListener('click', () => {
+  const desc = document.getElementById('expenseDesc').value;
+  const amount = document.getElementById('expenseAmount').value;
+  const date = document.getElementById('expenseDate').value;
+  if(!desc || !amount || !date) return alert("সব ফিল্ড পূরণ করুন");
+  expenses.push({desc, amount, date});
+  localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
+  document.getElementById('expenseDesc').value='';
+  document.getElementById('expenseAmount').value='';
+  document.getElementById('expenseDate').value='';
+  updateAccounts();
+});
+
+// =========================
+// Members
+// =========================
+function updateMembersTable(){
+  const members = JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
+  const div = document.getElementById('membersTable');
+  if(members.length===0){ div.innerHTML="কোনো মেম্বার নেই"; return; }
+  let html = '<table><tr><th>নাম</th><th>পদবি</th><th>মোবাইল</th></tr>';
+  members.forEach(m => {
+    html += `<tr><td>${m.name}</td><td>${m.role}</td><td>${m.phone || "-"}</td></tr>`;
+  });
+  html += '</table>';
+  div.innerHTML = html;
 }
 
-function deleteBaki(id) {
-  customers[current].baki = customers[current].baki.filter(b => b.id != id);
-  save(); loadBaki();
+document.getElementById('saveMember').addEventListener('click', () => {
+  const name = document.getElementById('memberName').value;
+  const role = document.getElementById('memberRole').value;
+  const phone = document.getElementById('memberPhone').value;
+  if(!name || !role) return alert("নাম এবং পদবি দিন");
+  const members = JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
+  members.push({name, role, phone});
+  localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
+  document.getElementById('memberName').value='';
+  document.getElementById('memberRole').value='';
+  document.getElementById('memberPhone').value='';
+  updateMembersTable();
+  updateReports();
+});
+
+// =========================
+// Reports
+// =========================
+function updateReports(){
+  const donations = JSON.parse(localStorage.getItem(DONATIONS_KEY) || "[]");
+  const members = JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
+  const thisMonth = new Date().toISOString().slice(0,7);
+  const monthlyDonations = donations.filter(d => d.date.startsWith(thisMonth));
+  document.getElementById('reportThisMonth').textContent = monthlyDonations.reduce((sum,d)=>sum+d.amount,0);
+  document.getElementById('reportReceipts').textContent = donations.length;
+  document.getElementById('reportMembers').textContent = members.length;
 }
 
-function openEditCustomer() {
-  let c = customers[current];
-  document.getElementById("editCustomerBox").classList.remove("hidden");
-  document.getElementById("editName").value = c.name;
-  document.getElementById("editPhone").value = c.phone;
+// =========================
+// Backup
+// =========================
+document.getElementById('exportBackup').addEventListener('click', ()=>{
+  const data = {
+    donations: JSON.parse(localStorage.getItem(DONATIONS_KEY)||"[]"),
+    expenses: JSON.parse(localStorage.getItem(EXPENSES_KEY)||"[]"),
+    members: JSON.parse(localStorage.getItem(MEMBERS_KEY)||"[]"),
+    notices: JSON.parse(localStorage.getItem(NOTICES_KEY)||"[]")
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download="backup.json";
+  a.click();
+});
+
+// Import Backup
+document.getElementById('importBackup').addEventListener('click', ()=>{
+  const file = document.getElementById('importFile').files[0];
+  if(!file) return alert("ফাইল নির্বাচন করুন");
+  const reader = new FileReader();
+  reader.onload = e => {
+    const data = JSON.parse(e.target.result);
+    localStorage.setItem(DONATIONS_KEY, JSON.stringify(data.donations||[]));
+    localStorage.setItem(EXPENSES_KEY, JSON.stringify(data.expenses||[]));
+    localStorage.setItem(MEMBERS_KEY, JSON.stringify(data.members||[]));
+    localStorage.setItem(NOTICES_KEY, JSON.stringify(data.notices||[]));
+    alert("ডেটা ইমপোর্ট সম্পন্ন");
+    updateDonationTable();
+    updateAccounts();
+    updateMembersTable();
+    updateReports();
+    updateNotices();
+  };
+  reader.readAsText(file);
+});
+
+// =========================
+// Notices
+// =========================
+function updateNotices(){
+  const notices = JSON.parse(localStorage.getItem(NOTICES_KEY)||"[]");
+  const div = document.getElementById('notices');
+  if(notices.length===0){ div.innerHTML="কোনো নোটিস নেই"; return; }
+  let html = '<table><tr><th>শিরোনাম</th><th>বিবরণ</th></tr>';
+  notices.forEach(n=>{
+    html += `<tr><td>${n.title}</td><td>${n.body}</td></tr>`;
+  });
+  html += '</table>';
+  div.innerHTML = html;
 }
 
-function closeEditCustomer() { document.getElementById("editCustomerBox").classList.add("hidden"); }
+document.getElementById('saveNotice').addEventListener('click', ()=>{
+  const title = document.getElementById('noticeTitle').value;
+  const body = document.getElementById('noticeBody').value;
+  if(!title || !body) return alert("শিরোনাম এবং বিবরণ দিন");
+  const notices = JSON.parse(localStorage.getItem(NOTICES_KEY)||"[]");
+  notices.push({title, body});
+  localStorage.setItem(NOTICES_KEY, JSON.stringify(notices));
+  document.getElementById('noticeTitle').value='';
+  document.getElementById('noticeBody').value='';
+  updateNotices();
+});
 
-function saveEditedCustomer() {
-  let c = customers[current];
-  let name = document.getElementById("editName").value;
-  let phone = document.getElementById("editPhone").value;
-  let photoFile = document.getElementById("editPhoto").files[0];
-  c.name = name; c.phone = phone;
-
-  if (photoFile) {
-    getBase64(photoFile, (base64Img) => {
-      c.photo = base64Img; save(); document.getElementById("editPhoto").value = "";
-      closeEditCustomer(); openCustomer(current);
-    });
-  } else { save(); closeEditCustomer(); openCustomer(current); }
-}
-
-function deleteCustomer() {
-  if (confirm("এই কাস্টমারের সব হিসাব ডিলিট হবে!")) {
-    customers.splice(current, 1); save(); goHome(); loadCustomers();
-  }
-        }
+// =========================
+// Initialize
+// =========================
+document.getElementById('year').textContent = new Date().getFullYear();
+updateDonationTable();
+updateAccounts();
+updateMembersTable();
+updateReports();
+updateNotices();
