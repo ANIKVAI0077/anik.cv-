@@ -592,4 +592,41 @@ window.loadGalleryPhotos = function(searchTerm = '') {
             galleryItem.innerHTML = `
                 <img src="${photo.imageData}" alt="ছবি">
                 <div class="gallery-item-info">
-                    <h4><i clas
+                    <h4><i class="fas fa-mobile-alt"></i> ${photo.customerNumber}</h4>
+                    <p><i class="far fa-calendar"></i> ${photo.uploadDate}</p>
+                    <p><i class="fas fa-file"></i> ${photo.fileSize}</p>
+                </div>
+            `;
+            
+            galleryItem.addEventListener('click', () => {
+                const modal = document.getElementById('image-modal');
+                const modalImage = document.getElementById('modal-image');
+                const modalInfo = document.getElementById('modal-info');
+                const deletePhotoBtn = document.getElementById('delete-photo');
+                
+                modalImage.src = photo.imageData;
+                modalInfo.innerHTML = `
+                    <div style="background: #F7FAFC; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h4 style="margin-bottom: 10px; color: #2D3748;">ছবি তথ্য</h4>
+                        <p><strong><i class="fas fa-mobile-alt"></i> মোবাইল নম্বর:</strong> ${photo.customerNumber}</p>
+                        <p><strong><i class="fas fa-file"></i> ফাইল নাম:</strong> ${photo.fileName}</p>
+                        <p><strong><i class="far fa-calendar"></i> আপলোড তারিখ:</strong> ${photo.uploadDate}</p>
+                        <p><strong><i class="fas fa-weight-hanging"></i> ফাইল সাইজ:</strong> ${photo.fileSize}</p>
+                    </div>
+                `;
+                
+                deletePhotoBtn.onclick = () => {
+                    if (confirm("আপনি কি নিশ্চিত এই ছবি ডিলিট করতে চান?")) {
+                        deletePhoto(photo.id);
+                        loadGalleryPhotos();
+                        modal.style.display = 'none';
+                    }
+                };
+                
+                modal.style.display = 'flex';
+            });
+            
+            galleryGrid.appendChild(galleryItem);
+        });
+    }
+};
