@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শিমু ডিজিটাল স্টুডিও - পেশাদার ফটোগ্রাফি সেবা</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400;700&family=Hind+Siliguri:wght@300;400;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="logo-loader">
+                <div class="camera-icon">
+                    <i class="fas fa-camera"></i>
+                    <div class="lens"></div>
+                </div>
+            </div>
+            <h2 class="brand-title">শিমু ডিজিটাল স্টুডিও</h2>
+            <p class="loading-text">সিস্টেম লোড হচ্ছে...</p>
+            <div class="progress-loader">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Facebook Button -->
+    <div class="floating-buttons">
+        <a href="https://www.facebook.com/share/16j1bD61nw/" target="_blank" class="floating-btn fb-btn">
+            <i class="fab fa-facebook-f"></i>
+            <span class="btn-tooltip">আমাদের ফেসবুক পেজ</span>
+        </a>
+        <a href="tel:+880" class="floating-btn call-btn">
+            <i class="fas fa-phone"></i>
+            <span class="btn-tooltip">কল করুন</span>
+        </a>
+        <a href="https://wa.me/" class="floating-btn wa-btn">
+            <i class="fab fa-whatsapp"></i>
+            <span class="btn-tooltip">হোয়াটসঅ্যাপ</span>
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-wrapper">
+        <!-- Header Section -->
+        <header class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="main-logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-camera"></i>
+                                <div class="logo-shine"></div>
+                            </div>
+                            <div class="logo-text">
+                                <h1 class="site-title">শিমু ডিজিটাল স্টুডিও</h1>
+                                <p class="site-tagline">পেশাদার ফটোগ্রাফি ও ভিডিওগ্রাফি সেবা</p>
+                            </div>
+                        </div>
+                        <div class="theme-toggle-wrapper">
+                            <button class="theme-toggle" id="themeToggle">
+                                <i class="fas fa-moon"></i>
+                                <span class="toggle-text">ডার্ক মোড</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalPhotos">0</h3>
+                                <p>মোট ছবি</p>
+                            </div>
+                            <div class="stat-glow"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCustomers">0</h3>
+                                <p>গ্রাহক সংখ্যা</p>
+                            </div>
+                            <div class="stat-glow"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="todayUploads">0</h3>
+                                <p>আজকের আপলোড</p>
+                            </div>
+                            <div class="stat-glow"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="serviceCount">12+</h3>
+                                <p>সার্ভিস সমূহ</p>
+                            </div>
+                            <div class="stat-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="container">
+                <div class="nav-menu">
+                    <button class="nav-item active" data-section="search">
+                        <div class="nav-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <span class="nav-text">ছবি খুঁজুন</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                    <button class="nav-item" data-section="upload">
+                        <div class="nav-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <span class="nav-text">ছবি আপলোড</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                    <button class="nav-item" data-section="gallery">
+                        <div class="nav-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <span class="nav-text">গ্যালারি</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                    <button class="nav-item" data-section="notice">
+                        <div class="nav-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <span class="nav-text">নোটিশ বোর্ড</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                    <button class="nav-item" data-section="services">
+                        <div class="nav-icon">
+                            <i class="fas fa-concierge-bell"></i>
+                        </div>
+                        <span class="nav-text">আমাদের সার্ভিস</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Search Section -->
+                <section id="searchSection" class="content-section active">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div>
+                                <h2>আপনার ছবি খুঁজুন</h2>
+                                <p class="section-subtitle">যেকোনো ডিভাইস থেকে আপনার মোবাইল নম্বর ব্যবহার করে ছবি খুঁজুন এবং ডাউনলোড করুন</p>
+                            </div>
+                        </div>
+                        <div class="section-actions">
+                            <button class="action-btn help-btn" id="searchHelp">
+                                <i class="fas fa-question-circle"></i>
+                                সাহায্য
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="search-container">
+                        <div class="search-card">
+                            <div class="search-input-group">
+                                <div class="input-with-label">
+                                    <label for="searchPhone">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        আপনার মোবাইল নম্বর
+                                    </label>
+                                    <div class="input-field">
+                                        <input type="tel" 
+                                               id="searchPhone" 
+                                               placeholder="01XXXXXXXXX"
+                                               pattern="[0-9]{11}"
+                                               maxlength="11"
+                                               required>
+                                        <div class="input-actions">
+                                            <button class="input-clear" id="clearSearch">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="input-hint">আপনি যে নম্বরটি স্টুডিওতে দিয়েছেন, সেটি ব্যবহার করুন</p>
+                                </div>
+                                <button class="search-btn" id="searchButton">
+                                    <i class="fas fa-search"></i>
+                                    ছবি খুঁজুন
+                                    <div class="btn-wave"></div>
+                                </button>
+                            </div>
+
+                            <div class="search-tips">
+                                <div class="tip-header">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <h4>সার্চ টিপস</h4>
+                                </div>
+                                <div class="tips-grid">
+                                    <div class="tip-item">
+                                        <div class="tip-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>১১ ডিজিটের মোবাইল নম্বর ব্যবহার করুন</p>
+                                    </div>
+                                    <div class="tip-item">
+                                        <div class="tip-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>স্টুডিওতে যে নম্বর দিয়েছেন সেটি দিন</p>
+                                    </div>
+                                    <div class="tip-item">
+                                        <div class="tip-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>যেকোনো ডিভাইস থেকে সার্চ করতে পারেন</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Results Area -->
+                        <div class="results-container" id="resultsContainer">
+                            <div class="results-header">
+                                <h3>
+                                    <i class="fas fa-images"></i>
+                                    <span id="resultCount">0</span>টি ছবি পাওয়া গেছে
+                                </h3>
+                                <div class="results-actions">
+                                    <button class="icon-btn" id="refreshResults">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                    <button class="icon-btn" id="downloadAllBtn" style="display: none;">
+                                        <i class="fas fa-download"></i>
+                                        সব ডাউনলোড
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="results-grid" id="resultsGrid">
+                                <!-- Results will appear here -->
+                                <div class="empty-state" id="emptyResults">
+                                    <div class="empty-icon">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <h3>কোন ছবি পাওয়া যায়নি</h3>
+                                    <p>আপনার মোবাইল নম্বর দিয়ে সার্চ করুন</p>
+                                    <button class="btn-secondary" onclick="document.getElementById('searchPhone').focus()">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        নম্বর দিন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upload Section -->
+                <section id="uploadSection" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div>
+                                <h2>নতুন ছবি আপলোড</h2>
+                                <p class="section-subtitle">একসাথে একাধিক ছবি আপলোড করুন (অ্যাডমিন এক্সেস প্রয়োজন)</p>
+                            </div>
+                        </div>
+                        <div class="upload-guide-btn" id="uploadGuideBtn">
+                            <i class="fas fa-info-circle"></i>
+                            গাইডলাইন
+                        </div>
+                    </div>
+
+                    <div class="upload-container">
+                        <form id="uploadForm">
+                            <div class="form-grid">
+                                <!-- Customer Info -->
+                                <div class="form-group">
+                                    <div class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        গ্রাহকের তথ্য
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-phone"></i>
+                                            <input type="tel" 
+                                                   id="customerPhone" 
+                                                   placeholder="গ্রাহকের মোবাইল নম্বর"
+                                                   pattern="[0-9]{11}"
+                                                   maxlength="11"
+                                                   required>
+                                        </div>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-user-tag"></i>
+                                            <input type="text" 
+                                                   id="customerName" 
+                                                   placeholder="গ্রাহকের নাম (ঐচ্ছিক)">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Photos Upload -->
+                                <div class="form-group">
+                                    <div class="form-label">
+                                        <i class="fas fa-images"></i>
+                                        ছবি নির্বাচন করুন
+                                    </div>
+                                    <div class="upload-area" id="dropArea">
+                                        <div class="upload-content">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <div class="upload-pulse"></div>
+                                            </div>
+                                            <div class="upload-text">
+                                                <h4>ছবি এখানে এনে ছেড়ে দিন</h4>
+                                                <p>অথবা ক্লিক করে ফাইল নির্বাচন করুন</p>
+                                                <span class="file-types">JPG, PNG, WebP (প্রতিটি সর্বোচ্চ ১০MB)</span>
+                                            </div>
+                                            <input type="file" 
+                                                   id="photoInput" 
+                                                   accept="image/*" 
+                                                   multiple
+                                                   required>
+                                            <button type="button" class="btn-select" id="selectFilesBtn">
+                                                <i class="fas fa-folder-open"></i>
+                                                ফাইল নির্বাচন
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Selected Files -->
+                                    <div class="selected-files" id="selectedFiles">
+                                        <div class="files-header">
+                                            <h5>
+                                                <i class="fas fa-list"></i>
+                                                নির্বাচিত ফাইলসমূহ
+                                                <span class="file-count" id="fileCount">0</span>
+                                            </h5>
+                                        </div>
+                                        <div class="files-list" id="filesList">
+                                            <!-- Files will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Admin Authentication -->
+                                <div class="form-group">
+                                    <div class="form-label">
+                                        <i class="fas fa-shield-alt"></i>
+                                        অ্যাডমিন ভেরিফিকেশন
+                                    </div>
+                                    <div class="auth-group">
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-key"></i>
+                                            <input type="password" 
+                                                   id="adminPassword" 
+                                                   placeholder="অ্যাডমিন পাসওয়ার্ড"
+                                                   required>
+                                            <button type="button" class="toggle-password" id="togglePassword">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="auth-hint">
+                                            <i class="fas fa-info-circle"></i>
+                                            শুধুমাত্র অনুমোদিত অ্যাডমিনরা আপলোড করতে পারবেন
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary" id="submitUpload">
+                                        <i class="fas fa-upload"></i>
+                                        ছবি আপলোড করুন
+                                        <div class="btn-spinner" id="uploadSpinner"></div>
+                                    </button>
+                                    <button type="button" class="btn-secondary" id="resetForm">
+                                        <i class="fas fa-redo"></i>
+                                        রিসেট করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Upload Progress -->
+                        <div class="upload-progress" id="uploadProgress">
+                            <div class="progress-header">
+                                <h4>
+                                    <i class="fas fa-sync-alt fa-spin"></i>
+                                    আপলোড চলছে...
+                                </h4>
+                                <span class="progress-percent" id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-file"></i>
+                                    <span id="progressText">প্রস্তুত হচ্ছে...</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="progressCount">0/0 সম্পূর্ণ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Statistics -->
+                    <div class="upload-stats">
+                        <div class="stats-card">
+                            <div class="stats-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stats-content">
+                                <h4 id="successCount">0</h4>
+                                <p>সফল আপলোড</p>
+                            </div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stats-icon warning">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stats-content">
+                                <h4 id="failedCount">0</h4>
+                                <p>ব্যর্থ আপলোড</p>
+                            </div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stats-icon info">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="stats-content">
+                                <h4 id="totalSize">0 MB</h4>
+                                <p>মোট আপলোড</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gallery Section -->
+                <section id="gallerySection" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div>
+                                <h2>সমস্ত ছবির গ্যালারি</h2>
+                                <p class="section-subtitle">অ্যাডমিন এক্সেসে সব ছবি দেখুন এবং ম্যানেজ করুন</p>
+                            </div>
+                        </div>
+                        <div class="section-actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" 
+                                       id="gallerySearch" 
+                                       placeholder="মোবাইল নম্বর দিয়ে খুঁজুন...">
+                                <button class="search-clear" id="clearGallerySearch">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Authentication -->
+                    <div class="auth-required" id="galleryAuth">
+                        <div class="auth-card">
+                            <div class="auth-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="auth-content">
+                                <h3>অ্যাডমিন অ্যাক্সেস প্রয়োজন</h3>
+                                <p>গ্যালারি দেখতে অ্যাডমিন পাসওয়ার্ড দিন</p>
+                                <div class="auth-form">
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-key"></i>
+                                        <input type="password" 
+                                               id="galleryPassword" 
+                                               placeholder="অ্যাডমিন পাসওয়ার্ড">
+                                        <button class="toggle-password" id="toggleGalleryPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <button class="btn-primary" id="galleryLoginBtn">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                        লগইন করুন
+                                    </button>
+                                </div>
+                                <div class="auth-hint">
+                                    <i class="fas fa-info-circle"></i>
+                                    শুধুমাত্র অথোরাইজ্ড ব্যক্তিরা প্রবেশ করতে পারবেন
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Content (Visible after login) -->
+                    <div class="gallery-content" id="galleryContent">
+                        <div class="gallery-controls">
+                            <div class="filter-options">
+                                <button class="filter-btn active" data-filter="all">সব ছবি</button>
+                                <button class="filter-btn" data-filter="today">আজকের</button>
+                                <button class="filter-btn" data-filter="week">এই সপ্তাহের</button>
+                                <select class="filter-select" id="sortGallery">
+                                    <option value="newest">নতুন থেকে পুরাতন</option>
+                                    <option value="oldest">পুরাতন থেকে নতুন</option>
+                                    <option value="number">মোবাইল নম্বর</option>
+                                </select>
+                            </div>
+                            <div class="gallery-actions">
+                                <button class="btn-secondary" id="refreshGallery">
+                                    <i class="fas fa-sync-alt"></i>
+                                    রিফ্রেশ
+                                </button>
+                                <button class="btn-danger" id="logoutGallery">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    লগআউট
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Stats -->
+                        <div class="gallery-stats">
+                            <div class="gallery-stat">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h5>মোট ছবি</h5>
+                                    <h3 id="galleryTotal">0</h3>
+                                </div>
+                            </div>
+                            <div class="gallery-stat">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-hdd"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h5>স্টোরেজ</h5>
+                                    <h3 id="galleryStorage">0 MB</h3>
+                                </div>
+                            </div>
+                            <div class="gallery-stat">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h5>গ্রাহক</h5>
+                                    <h3 id="galleryCustomers">0</h3>
+                                </div>
+                            </div>
+                            <div class="gallery-stat">
+                                <div class="stat-icon info">
+                                    <i class="fas fa-calendar-day"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h5>আজকের</h5>
+                                    <h3 id="galleryToday">0</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Grid -->
+                        <div class="gallery-grid" id="galleryGrid">
+                            <!-- Gallery items will appear here -->
+                            <div class="empty-gallery" id="emptyGallery">
+                                <div class="empty-content">
+                                    <i class="fas fa-images"></i>
+                                    <h3>কোন ছবি পাওয়া যায়নি</h3>
+                                    <p>ছবি আপলোড করে শুরু করুন</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Pagination -->
+                        <div class="pagination" id="galleryPagination">
+                            <button class="page-btn" id="prevPage" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                পূর্ববর্তী
+                            </button>
+                            <div class="page-info">
+                                পাতা <span id="currentPage">1</span>/<span id="totalPages">1</span>
+                            </div>
+                            <button class="page-btn" id="nextPage" disabled>
+                                পরবর্তী
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notice Board Section -->
+                <section id="noticeSection" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <div>
+                                <h2>নোটিশ বোর্ড</h2>
+                                <p class="section-subtitle">স্টুডিওর আপডেট, অফার এবং গুরুত্বপূর্ণ নোটিশসমূহ</p>
+                            </div>
+                        </div>
+                        <div class="section-actions">
+                            <button class="action-btn" id="addNoticeBtn">
+                                <i class="fas fa-plus"></i>
+                                নতুন নোটিশ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="notice-container">
+                        <!-- Notices Grid -->
+                        <div class="notices-grid" id="noticesGrid">
+                            <!-- Notices will appear here -->
+                            <div class="loading-notices">
+                                <div class="spinner"></div>
+                                <p>নোটিশ লোড হচ্ছে...</p>
+                            </div>
+                        </div>
+
+                        <!-- Notice Editor (Admin Only) -->
+                        <div class="notice-editor" id="noticeEditor">
+                            <div class="editor-header">
+                                <h3>
+                                    <i class="fas fa-edit"></i>
+                                    নতুন নোটিশ লিখুন
+                                </h3>
+                                <button class="close-editor" id="closeEditor">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="editor-form">
+                                <div class="form-group">
+                                    <label for="noticeTitle">
+                                        <i class="fas fa-heading"></i>
+                                        নোটিশ শিরোনাম
+                                    </label>
+                                    <input type="text" 
+                                           id="noticeTitle" 
+                                           placeholder="নোটিশের শিরোনাম লিখুন"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="noticeContent">
+                                        <i class="fas fa-align-left"></i>
+                                        নোটিশ বিবরণ
+                                    </label>
+                                    <textarea id="noticeContent" 
+                                              placeholder="নোটিশের বিস্তারিত বর্ণনা লিখুন..."
+                                              rows="6"
+                                              required></textarea>
+                                    <div class="char-count">
+                                        <span id="charCount">0</span>/500
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="noticeType">
+                                            <i class="fas fa-tag"></i>
+                                            নোটিশের ধরন
+                                        </label>
+                                        <select id="noticeType">
+                                            <option value="general">সাধারণ নোটিশ</option>
+                                            <option value="important">গুরুত্বপূর্ণ</option>
+                                            <option value="offer">অফার</option>
+                                            <option value="update">আপডেট</option>
+                                            <option value="service">সার্ভিস</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="noticeExpiry">
+                                            <i class="fas fa-calendar-times"></i>
+                                            মেয়াদ শেষ
+                                        </label>
+                                        <input type="date" id="noticeExpiry">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn-primary" id="publishNotice">
+                                        <i class="fas fa-paper-plane"></i>
+                                        নোটিশ প্রকাশ করুন
+                                    </button>
+                                    <button type="button" class="btn-secondary" id="saveDraft">
+                                        <i class="fas fa-save"></i>
+                                        ড্রাফট সেভ করুন
+                                    </button>
+                                    <button type="button" class="btn-danger" id="clearEditor">
+                                        <i class="fas fa-times"></i>
+                                        ক্লিয়ার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Section -->
+                <section id="servicesSection" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon">
+                                <i class="fas fa-concierge-bell"></i>
+                            </div>
+                            <div>
+                                <h2>আমাদের সার্ভিস সমূহ</h2>
+                                <p class="section-subtitle">স্টুডিওতে প্রদত্ত সকল সেবা ও সুযোগ-সুবিধা</p>
+                            </div>
+                        </div>
+                        <div class="section-actions">
+                            <button class="action-btn" id="manageServicesBtn">
+                                <i class="fas fa-cog"></i>
+                                ম্যানেজ সার্ভিস
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="services-container">
+                        <!-- Services will be loaded here -->
+                        <div class="services-grid" id="servicesGrid">
+                            <!-- Services items -->
+                        </div>
+                    </div>
+
+                    <!-- Services Management (Admin Only) -->
+                    <div class="services-management" id="servicesManagement">
+                        <div class="management-header">
+                            <h3>
+                                <i class="fas fa-cogs"></i>
+                                সার্ভিস ম্যানেজমেন্ট
+                            </h3>
+                            <button class="close-management" id="closeManagement">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <div class="management-form">
+                            <div class="form-group">
+                                <label for="serviceTitle">
+                                    <i class="fas fa-heading"></i>
+                                    সার্ভিসের নাম
+                                </label>
+                                <input type="text" 
+                                       id="serviceTitle" 
+                                       placeholder="সার্ভিসের নাম লিখুন"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="serviceDescription">
+                                    <i class="fas fa-align-left"></i>
+                                    সার্ভিসের বিবরণ
+                                </label>
+                                <textarea id="serviceDescription" 
+                                          placeholder="সার্ভিসের বিস্তারিত বর্ণনা লিখুন..."
+                                          rows="4"
+                                          required></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="serviceIcon">
+                                        <i class="fas fa-icons"></i>
+                                        আইকন নির্বাচন
+                                    </label>
+                                    <div class="icon-selector">
+                                        <select id="serviceIcon">
+                                            <option value="camera">ফটোগ্রাফি</option>
+                                            <option value="video">ভিডিওগ্রাফি</option>
+                                            <option value="edit">এডিটিং</option>
+                                            <option value="print">প্রিন্টিং</option>
+                                            <option value="album">অ্যালবাম</option>
+                                            <option value="frame">ফ্রেমিং</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="servicePrice">
+                                        <i class="fas fa-tags"></i>
+                                        মূল্য রেঞ্জ
+                                    </label>
+                                    <input type="text" 
+                                           id="servicePrice" 
+                                           placeholder="500 - 5000 টাকা">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-primary" id="addService">
+                                    <i class="fas fa-plus"></i>
+                                    সার্ভিস যোগ করুন
+                                </button>
+                                <button type="button" class="btn-secondary" id="updateServices">
+                                    <i class="fas fa-sync-alt"></i>
+                                    আপডেট করুন
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-grid">
+                        <!-- About Section -->
+                        <div class="footer-section">
+                            <div class="footer-logo">
+                                <i class="fas fa-camera"></i>
+                                <div>
+                                    <h3>শিমু ডিজিটাল স্টুডিও</h3>
+                                    <p class="footer-tagline">স্মৃতি সংরক্ষণের নির্ভরযোগ্য ঠিকানা</p>
+                                </div>
+                            </div>
+                            <p class="footer-description">
+                                প্রফেশনাল ফটোগ্রাফি, ভিডিওগ্রাফি এবং ইভেন্ট কভারেজ সেবা প্রদানকারী। 
+                                আপনার বিশেষ মুহূর্তগুলোকে করে তুলুন চিরস্মরণীয়।
+                            </p>
+                            <div class="social-links">
+                                <a href="https://www.facebook.com/share/16j1bD61nw/" target="_blank" class="social-link facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-link whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <a href="#" class="social-link instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-link youtube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="footer-section">
+                            <h4 class="footer-title">
+                                <i class="fas fa-link"></i>
+                                দ্রুত লিংক
+                            </h4>
+                            <ul class="footer-links">
+                                <li>
+                                    <a href="#" data-section="search">
+                                        <i class="fas fa-search"></i>
+                                        ছবি খুঁজুন
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-section="services">
+                                        <i class="fas fa-concierge-bell"></i>
+                                        আমাদের সার্ভিস
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-section="notice">
+                                        <i class="fas fa-bullhorn"></i>
+                                        নোটিশ বোর্ড
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-section="gallery">
+                                        <i class="fas fa-images"></i>
+                                        গ্যালারি
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Contact Info -->
+                        <div class="footer-section">
+                            <h4 class="footer-title">
+                                <i class="fas fa-address-card"></i>
+                                যোগাযোগ
+                            </h4>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div>
+                                        <h5>ঠিকানা</h5>
+                                        <p>স্টুডিও লোকেশন, আপনার এলাকা</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <h5>ফোন নম্বর</h5>
+                                        <p>+৮৮০ ১৭XX-XXXXXX</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <h5>ইমেইল</h5>
+                                        <p>info@shimustudio.com</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <h5>সময়সূচী</h5>
+                                        <p>সকাল ৯টা - রাত ১০টা</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services List -->
+                        <div class="footer-section">
+                            <h4 class="footer-title">
+                                <i class="fas fa-star"></i>
+                                জনপ্রিয় সার্ভিস
+                            </h4>
+                            <ul class="services-list">
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>ওয়েডিং ফটোগ্রাফি</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>পাসপোর্ট সাইজ ফটো</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>স্টুডিও ফটোশুট</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>ভিডিও এডিটিং</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>ফটো প্রিন্টিং</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>অ্যালবাম তৈরি</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="footer-bottom">
+                        <div class="copyright">
+                            <p>&copy; ২০২৪ শিমু ডিজিটাল স্টুডিও। সর্বস্বত্ব সংরক্ষিত।</p>
+                            <p class="footer-meta">
+                                <span>ভার্সন: ৩.০</span>
+                                <span> | </span>
+                                <span>আপডেট: আজ</span>
+                            </p>
+                        </div>
+                        <div class="footer-nav">
+                            <a href="#" data-section="notice">গোপনীয়তা নীতি</a>
+                            <a href="#" data-section="notice">শর্তাবলী</a>
+                            <a href="#" data-section="notice">সাহায্য</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-image"></i>
+                    <h3>ছবি প্রিভিউ</h3>
+                </div>
+                <div class="modal-controls">
+                    <button class="modal-nav" id="prevImage">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="modal-nav" id="nextImage">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="modal-close" id="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="image-viewer">
+                    <div class="image-container">
+                        <img id="modalImage" src="" alt="ছবি প্রিভিউ">
+                        <div class="image-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="image-info" id="imageInfo">
+                        <!-- Image info will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-actions">
+                    <button class="btn-success" id="downloadImage">
+                        <i class="fas fa-download"></i>
+                        ডাউনলোড করুন
+                    </button>
+                    <button class="btn-secondary" id="shareImage">
+                        <i class="fas fa-share-alt"></i>
+                        শেয়ার করুন
+                    </button>
+                    <button class="btn-danger" id="deleteImage" style="display: none;">
+                        <i class="fas fa-trash"></i>
+                        ডিলিট করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
