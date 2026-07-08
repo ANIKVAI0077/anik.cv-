@@ -1,326 +1,695 @@
-// গ্লোবাল ভেরিয়েবল
-const ADMIN_PASSWORD = "ShimuStudio@2024"; // এটা আপনার পছন্দমতো পরিবর্তন করুন
-let images = [];
-let selectedFiles = [];
+/* ==========================================
+   Professional Bangladesh CV Generator
+   script.js — Part-1
+========================================== */
 
-// লোকাল স্টোরেজ থেকে ছবি লোড করা
-function loadImages() {
-    const savedImages = localStorage.getItem('shimuImages');
-    if (savedImages) {
-        images = JSON.parse(savedImages);
-        displayGalleryImages();
+"use strict";
+
+/* ===========================
+   Elements
+=========================== */
+
+const form = document.getElementById("cvForm");
+
+const photoInput = document.getElementById("photo");
+
+const previewPhoto = document.getElementById("previewPhoto");
+
+const photoPlaceholder = document.getElementById("photoPlaceholder");
+
+/* ===========================
+   Input → Preview Mapping
+=========================== */
+
+const previewMap = {
+
+    fullName: "viewFullName",
+
+    fatherName: "viewFatherName",
+
+    motherName: "viewMotherName",
+
+    birthDate: "viewBirthDate",
+
+    gender: "viewGender",
+
+    religion: "viewReligion",
+
+    nationality: "viewNationality",
+
+    height: "viewHeight",
+
+    bloodGroup: "viewBloodGroup",
+
+    maritalStatus: "viewMaritalStatus",
+
+    mobile: "viewMobile",
+
+    email: "viewEmail",
+
+    nid: "viewNid",
+
+    birthCertificate: "viewBirthCertificate",
+
+    presentAddress: "viewPresentAddress",
+
+    permanentAddress: "viewPermanentAddress",
+
+    hscGroup: "viewHscGroup",
+
+    hscBoard: "viewHscBoard",
+
+    hscResult: "viewHscResult",
+
+    hscYear: "viewHscYear",
+
+    sscGroup: "viewSscGroup",
+
+    sscBoard: "viewSscBoard",
+
+    sscResult: "viewSscResult",
+
+    sscYear: "viewSscYear"
+
+};
+
+/* ===========================
+   Live Preview
+=========================== */
+
+function updatePreview(inputId){
+
+    const input = document.getElementById(inputId);
+
+    const output = document.getElementById(previewMap[inputId]);
+
+    if(!input || !output){
+
+        return;
+
     }
+
+    output.textContent = input.value;
+
 }
 
-// ছবি সেভ করা
-function saveImages() {
-    localStorage.setItem('shimuImages', JSON.stringify(images));
-}
+/* ===========================
+   Attach Live Event
+=========================== */
 
-// নোটিফিকেশন দেখানো
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-exclamation-triangle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
-}
+Object.keys(previewMap).forEach(function(id){
 
-// ইমেজ প্রিভিউ
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    handleFiles(e.target.files);
-});
+    const input = document.getElementById(id);
 
-// Drag and Drop functionality
-const dropArea = document.getElementById('dropArea');
+    if(!input){
 
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, preventDefaults, false);
-});
+        return;
 
-function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
+    }
 
-['dragenter', 'dragover'].forEach(eventName => {
-    dropArea.addEventListener(eventName, highlight, false);
-});
+    input.addEventListener("input",function(){
 
-['dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, unhighlight, false);
-});
+        updatePreview(id);
 
-function highlight() {
-    dropArea.classList.add('dragover');
-}
+        saveData();
 
-function unhighlight() {
-    dropArea.classList.remove('dragover');
-}
-
-dropArea.addEventListener('drop', function(e) {
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    handleFiles(files);
-});
-
-function handleFiles(files) {
-    selectedFiles = [...files];
-    displayPreview();
-}
-
-function displayPreview() {
-    const preview = document.getElementById('imagePreview');
-    preview.innerHTML = '';
-    
-    selectedFiles.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const previewItem = document.createElement('div');
-            previewItem.className = 'preview-item';
-            previewItem.innerHTML = `
-                <img src="${e.target.result}" alt="Preview">
-                <button class="remove-btn" onclick="removeImage(${index})">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            preview.appendChild(previewItem);
-        };
-        reader.readAsDataURL(file);
     });
+
+});
+
+/* ===========================
+   Today Date
+=========================== */
+
+function updateDate(){
+
+    const today = new Date();
+
+    const day = String(today.getDate()).padStart(2,"0");
+
+    const month = String(today.getMonth()+1).padStart(2,"0");
+
+    const year = today.getFullYear();
+
+    const dateBox = document.getElementById("viewDate");
+
+    if(dateBox){
+
+        dateBox.textContent = day + "/" + month + "/" + year;
+
+    }
+
 }
 
-function removeImage(index) {
-    selectedFiles.splice(index, 1);
-    displayPreview();
-}
+updateDate();
 
-// ছবি আপলোড ফাংশন
-function uploadImages() {
-    const adminPass = document.getElementById('adminPass').value;
-    const imageName = document.getElementById('imageName').value;
-    const imageNumber = document.getElementById('imageNumber').value;
-    
-    if (adminPass !== ADMIN_PASSWORD) {
-        showNotification('ভুল পাসওয়ার্ড!', 'error');
-        return;
-    }
-    
-    if (selectedFiles.length === 0) {
-        showNotification('কোনো ছবি সিলেক্ট করা হয়নি!', 'warning');
-        return;
-    }
-    
-    if (!imageName) {
-        showNotification('ছবির নাম দিন!', 'warning');
-        return;
-    }
-    
-    selectedFiles.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imageData = {
-                id: Date.now() + index,
-                name: imageName,
-                number: imageNumber || `IMG${Date.now()}`,
-                data: e.target.result,
-                uploadedAt: new Date().toISOString()
-            };
-            
-            images.push(imageData);
-            
-            if (index === selectedFiles.length - 1) {
-                saveImages();
-                showNotification(`${selectedFiles.length} টি ছবি সফলভাবে আপলোড হয়েছে!`);
-                
-                // ফর্ম রিসেট
-                document.getElementById('adminPass').value = '';
-                document.getElementById('imageName').value = '';
-                document.getElementById('imageNumber').value = '';
-                selectedFiles = [];
-                displayPreview();
-            }
-        };
-        reader.readAsDataURL(file);
+/* ===========================
+   Signature Name
+=========================== */
+
+const fullNameInput = document.getElementById("fullName");
+
+if(fullNameInput){
+
+    fullNameInput.addEventListener("input",function(){
+
+        const sign = document.getElementById("viewSignatureName");
+
+        if(sign){
+
+            sign.textContent = this.value || "আবেদনকারীর স্বাক্ষর";
+
+        }
+
     });
-}
 
-// ছবি সার্চ ফাংশন
-function searchImage() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const searchResult = document.getElementById('searchResult');
-    
-    if (!searchTerm) {
-        showNotification('সার্চ করতে কিছু লিখুন!', 'warning');
-        return;
-    }
-    
-    const results = images.filter(img => 
-        img.name.toLowerCase().includes(searchTerm) || 
-        img.number.toLowerCase().includes(searchTerm)
+}/* ==========================================
+   Professional Bangladesh CV Generator
+   script.js — Part-2
+========================================== */
+
+/* ===========================
+   Local Storage
+=========================== */
+
+const STORAGE_KEY = "bd_cv_generator_v2";
+
+/* ===========================
+   Save Form Data
+=========================== */
+
+function saveData(){
+
+    const data = {};
+
+    Object.keys(previewMap).forEach(function(id){
+
+        const input = document.getElementById(id);
+
+        if(input){
+
+            data[id] = input.value;
+
+        }
+
+    });
+
+    localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(data)
+
     );
-    
-    if (results.length === 0) {
-        searchResult.innerHTML = `
-            <div class="no-results">
-                <i class="fas fa-search" style="font-size: 3rem; color: #ccc;"></i>
-                <p style="text-align: center; color: #666; margin-top: 1rem;">কোনো ছবি পাওয়া যায়নি!</p>
-            </div>
-        `;
+
+}
+
+/* ===========================
+   Load Form Data
+=========================== */
+
+function loadData(){
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if(!saved){
+
         return;
+
     }
-    
-    displaySearchResults(results);
+
+    const data = JSON.parse(saved);
+
+    Object.keys(data).forEach(function(id){
+
+        const input = document.getElementById(id);
+
+        if(input){
+
+            input.value = data[id];
+
+            updatePreview(id);
+
+        }
+
+    });
+
 }
 
-function displaySearchResults(results) {
-    const searchResult = document.getElementById('searchResult');
-    searchResult.innerHTML = `
-        <div class="gallery-grid">
-            ${results.map(img => `
-                <div class="gallery-item">
-                    <img src="${img.data}" alt="${img.name}">
-                    <div class="gallery-item-info">
-                        <span>${img.name} - ${img.number}</span>
-                        <button class="download-btn" onclick="downloadImage('${img.data}', '${img.name}.jpg')">
-                            <i class="fas fa-download"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-    `;
+/* ===========================
+   Photo Upload
+=========================== */
+
+if(photoInput){
+
+    photoInput.addEventListener("change",function(){
+
+        const file = this.files[0];
+
+        if(!file){
+
+            return;
+
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            previewPhoto.src = e.target.result;
+
+            previewPhoto.style.display = "block";
+
+            photoPlaceholder.style.display = "none";
+
+            localStorage.setItem(
+
+                "cv_photo",
+
+                e.target.result
+
+            );
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
 }
 
-// ডাউনলোড ফাংশন
-function downloadImage(dataUrl, filename) {
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showNotification('ডাউনলোড শুরু হয়েছে!');
-}
+/* ===========================
+   Load Saved Photo
+=========================== */
 
-// গ্যালারি আনলক ফাংশন
-function unlockGallery() {
-    const galleryPass = document.getElementById('galleryPass').value;
-    
-    if (galleryPass === ADMIN_PASSWORD) {
-        document.getElementById('galleryLogin').style.display = 'none';
-        document.getElementById('galleryContent').style.display = 'block';
-        displayGalleryImages();
-        showNotification('গ্যালারি আনলক করা হয়েছে!');
-    } else {
-        showNotification('ভুল পাসওয়ার্ড!', 'error');
-    }
-}
+function loadPhoto(){
 
-function logoutGallery() {
-    document.getElementById('galleryLogin').style.display = 'block';
-    document.getElementById('galleryContent').style.display = 'none';
-    document.getElementById('galleryPass').value = '';
-    showNotification('গ্যালারি থেকে লগআউট করা হয়েছে!');
-}
+    const photo = localStorage.getItem("cv_photo");
 
-function displayGalleryImages() {
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    if (images.length === 0) {
-        galleryGrid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
-                <i class="fas fa-images" style="font-size: 4rem; color: #ccc;"></i>
-                <p style="color: #666; margin-top: 1rem;">কোনো ছবি নেই। প্রথমে ছবি আপলোড করুন!</p>
-            </div>
-        `;
+    if(!photo){
+
         return;
+
     }
-    
-    galleryGrid.innerHTML = images.map(img => `
-        <div class="gallery-item">
-            <img src="${img.data}" alt="${img.name}">
-            <div class="gallery-item-info">
-                <span>${img.name} - ${img.number}</span>
-                <button class="download-btn" onclick="downloadImage('${img.data}', '${img.name}.jpg')">
-                    <i class="fas fa-download"></i>
-                </button>
-            </div>
-        </div>
-    `).join('');
+
+    previewPhoto.src = photo;
+
+    previewPhoto.style.display = "block";
+
+    photoPlaceholder.style.display = "none";
+
 }
 
-// স্মুথ স্ক্রোল
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+/* ===========================
+   Reset Form
+=========================== */
+
+if(form){
+
+    form.addEventListener("reset",function(){
+
+        setTimeout(function(){
+
+            localStorage.removeItem(STORAGE_KEY);
+
+            localStorage.removeItem("cv_photo");
+
+            location.reload();
+
+        },100);
+
+    });
+
+}
+
+/* ===========================
+   Initial Load
+=========================== */
+
+window.addEventListener("load",function(){
+
+    loadData();
+
+    loadPhoto();
+
+});/* ==========================================
+   Professional Bangladesh CV Generator
+   script.js — Part-3
+========================================== */
+
+/* ===========================
+   PDF Download
+=========================== */
+
+const downloadBtn = document.getElementById("downloadPdf");
+
+if(downloadBtn){
+
+    downloadBtn.addEventListener("click",generatePDF);
+
+}
+
+async function generatePDF(){
+
+    const cv = document.getElementById("cvPreview");
+
+    if(!cv){
+
+        return;
+
+    }
+
+    downloadBtn.disabled = true;
+
+    downloadBtn.textContent = "PDF তৈরি হচ্ছে...";
+
+    try{
+
+        const canvas = await html2canvas(cv,{
+
+            scale:3,
+
+            useCORS:true,
+
+            allowTaint:true,
+
+            backgroundColor:"#ffffff",
+
+            logging:false,
+
+            imageTimeout:0,
+
+            removeContainer:true
+
+        });
+
+        const imgData = canvas.toDataURL("image/png",1.0);
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+
+            orientation:"portrait",
+
+            unit:"mm",
+
+            format:"a4",
+
+            compress:true
+
+        });
+
+        const pdfWidth = 210;
+
+        const pdfHeight = 297;
+
+        pdf.addImage(
+
+            imgData,
+
+            "PNG",
+
+            0,
+
+            0,
+
+            pdfWidth,
+
+            pdfHeight,
+
+            undefined,
+
+            "FAST"
+
+        );
+
+        pdf.save("বাংলাদেশ-জীবনবৃত্তান্ত.pdf");
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("PDF তৈরি করতে সমস্যা হয়েছে।");
+
+    }
+
+    downloadBtn.disabled = false;
+
+    downloadBtn.textContent = "PDF ডাউনলোড";
+
+}
+
+/* ===========================
+   Print
+=========================== */
+
+const printBtn = document.getElementById("printCv");
+
+if(printBtn){
+
+    printBtn.addEventListener("click",function(){
+
+        window.print();
+
+    });
+
+}
+
+/* ===========================
+   Refresh Preview
+=========================== */
+
+function refreshPreview(){
+
+    Object.keys(previewMap).forEach(function(id){
+
+        updatePreview(id);
+
+    });
+
+}
+
+refreshPreview();
+
+/* ===========================
+   Auto Update Date
+=========================== */
+
+setInterval(function(){
+
+    updateDate();
+
+},60000);
+
+/* ===========================
+   Image Error Fix
+=========================== */
+
+if(previewPhoto){
+
+    previewPhoto.onerror = function(){
+
+        this.style.display = "none";
+
+        if(photoPlaceholder){
+
+            photoPlaceholder.style.display = "flex";
+
+        }
+
+    };
+
+}
+/* ==========================================
+   Professional Bangladesh CV Generator
+   script.js — Part-4
+========================================== */
+
+/* ===========================
+   Required Field Validation
+=========================== */
+
+function validateForm(){
+
+    const requiredFields = [
+
+        "fullName",
+
+        "fatherName",
+
+        "motherName",
+
+        "mobile"
+
+    ];
+
+    for(const id of requiredFields){
+
+        const input = document.getElementById(id);
+
+        if(!input){
+
+            continue;
+
+        }
+
+        if(input.value.trim() === ""){
+
+            alert("অনুগ্রহ করে সকল প্রয়োজনীয় তথ্য পূরণ করুন।");
+
+            input.focus();
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+/* ===========================
+   Mobile Number Validation
+=========================== */
+
+const mobileInput = document.getElementById("mobile");
+
+if(mobileInput){
+
+    mobileInput.addEventListener("input",function(){
+
+        this.value = this.value.replace(/[^0-9]/g,"");
+
+        if(this.value.length > 11){
+
+            this.value = this.value.substring(0,11);
+
+        }
+
+    });
+
+}
+
+/* ===========================
+   PDF Button Validation
+=========================== */
+
+if(downloadBtn){
+
+    downloadBtn.addEventListener("click",function(e){
+
+        if(!validateForm()){
+
+            e.preventDefault();
+
+            return;
+
+        }
+
+    });
+
+}
+
+/* ===========================
+   Print Validation
+=========================== */
+
+if(printBtn){
+
+    printBtn.addEventListener("click",function(e){
+
+        if(!validateForm()){
+
+            e.preventDefault();
+
+            return;
+
+        }
+
+    });
+
+}
+
+/* ===========================
+   Auto Save Before Exit
+=========================== */
+
+window.addEventListener("beforeunload",function(){
+
+    saveData();
+
+});
+
+/* ===========================
+   Prevent Form Submit
+=========================== */
+
+if(form){
+
+    form.addEventListener("submit",function(e){
+
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+
     });
+
+}
+
+/* ===========================
+   Initialize Project
+=========================== */
+
+window.addEventListener("DOMContentLoaded",function(){
+
+    loadData();
+
+    loadPhoto();
+
+    refreshPreview();
+
+    updateDate();
+
 });
 
-// মোবাইল মেনু
-document.querySelector('.mobile-menu').addEventListener('click', function() {
-    const navLinks = document.querySelector('.nav-links');
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-});
+/* ===========================
+   Focus First Input
+=========================== */
 
-// স্ক্রোল ইফেক্ট
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'var(--box-shadow)';
+window.addEventListener("load",function(){
+
+    const firstInput = document.getElementById("fullName");
+
+    if(firstInput){
+
+        firstInput.focus();
+
     }
+
 });
 
-// অ্যাক্টিভ নেভিগেশন লিংক
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        const scroll = window.scrollY;
-        
-        if (scroll >= sectionTop && scroll < sectionBottom) {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${section.id}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-    });
+/* ===========================
+   Clear Preview When Empty
+=========================== */
+
+Object.keys(previewMap).forEach(function(key){
+
+    const input = document.getElementById(key);
+
+    const output = document.getElementById(previewMap[key]);
+
+    if(input && output && input.value.trim()===""){
+
+        output.textContent = "";
+
+    }
+
 });
 
-// লোকাল স্টোরেজ থেকে ছবি লোড করা
-loadImages();
+/* ===========================
+   Console Message
+=========================== */
 
-// ইনিশিয়ালাইজেশন
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('শিমু ডিজিটাল স্টুডিও রেডি!');
-    
-    // ফেসবুক আইকন লিংক সেট করা
-    const fbLinks = document.querySelectorAll('.facebook-icon, .footer-social a');
-    fbLinks.forEach(link => {
-        link.href = 'https://www.facebook.com/share/14Wu77AfRTs/';
-    });
-});
+console.log(
+    "Professional Bangladesh CV Generator Loaded Successfully."
+);
+
